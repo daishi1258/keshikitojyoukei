@@ -1,7 +1,7 @@
 /* 余白アイデアの見本 */
 .hero-text { position: relative; }
 .idea { position: absolute; z-index: 1; }
-.idea-words { top: 150px; right: calc((clamp(28px, 5vw, 64px) + clamp(44px, 6.4vw, 84px)) + 40px); writing-mode: vertical-rl;
+.idea-words { top: 150px; right: calc((clamp(28px, 5vw, 64px) + clamp(44px, 6.4vw, 84px)) + 64px); writing-mode: vertical-rl;
   font-family: var(--font-name); font-weight: 600; font-size: 15px; line-height: 2.4; letter-spacing: .32em; color: var(--muted); }
 .idea-live { left: 0; bottom: 28px; display: flex; flex-direction: column; gap: 2px; padding-left: 16px; border-left: 2px solid var(--accent); color: var(--text); }
 .idea-live .k { font-family: var(--font-head); font-size: 13px; letter-spacing: .24em; color: var(--accent); }
