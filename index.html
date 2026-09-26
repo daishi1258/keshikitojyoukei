@@ -10,13 +10,21 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- 動きを使う印(スクリプトが動かない環境では、動きなしで全部表示される) -->
-  <script>document.documentElement.classList.add('js');</script>
+  <script>document.documentElement.classList.add('js');
+  // 読み込み中の画面は、1回の訪問で最初の1回だけ
+  try { if (!sessionStorage.getItem('kj-loaded')) document.documentElement.classList.add('loading'); } catch (e) {}</script>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500&family=Noto+Sans+JP:wght@400;500&family=Shippori+Mincho:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="theme.css?v=9">
-  <link rel="stylesheet" href="style.css?v=22">
+  <link rel="stylesheet" href="style.css?v=24">
   <link rel="stylesheet" href="idea.css?v=6">
 </head>
 <body>
+
+<!-- ▼ 読み込み中の画面(葉っぱが揺れる。スクリプトが動かないときは出ない) -->
+<div class="loader" aria-hidden="true">
+  <svg class="loader-leaf" viewBox="0 0 48 48"><path fill="currentColor" d="M24 4C12 12 9 26 22 42c1 1 3 1 4 0C39 26 36 12 24 4z"/><path d="M24 9v33M24 20l-6-5M24 28l7-6M24 35l-6-5" fill="none" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity=".7"/></svg>
+  <p class="loader-text">LOADING<span class="loader-dots"><i>.</i><i>.</i><i>.</i></span></p>
+</div>
 
 <!-- ▼ ヘッダー -->
 <header class="site-header">
@@ -48,7 +56,7 @@
 <div class="hero" id="top">
   <div class="hero-text">
     <!-- アーティスト名。専用の手書きロゴがないので、明朝体で表示 -->
-    <h1 class="hero-name">景色と情景</h1>
+    <h1 class="hero-name" aria-label="景色と情景"><span style="--i:0">景</span><span style="--i:1">色</span><span style="--i:2">と</span><span style="--i:3">情</span><span style="--i:4">景</span></h1>
     <div class="idea idea-words" aria-hidden="true">木漏れ日の中で<br>名前のない景色を<br>うたにしている</div><a class="idea idea-live" href="live.html"><span class="k">NEXT LIVE</span><span class="d">&nbsp;</span><span class="p"></span><span class="t"></span><span class="m">LIVE INFO →</span></a>
     <span class="hero-scroll"><i class="line"></i>SCROLL</span>
   </div>
@@ -165,6 +173,23 @@
 <script src="js/format.js?v=1"></script>
 <script src="js/live.js?v=6"></script>
 <script src="js/news.js?v=2"></script>
+
+<!-- 読み込み中の画面を消す(読み込みが終わって、最低1.4秒たったら。遅くても6秒で消す) -->
+<script>
+(function () {
+  var html = document.documentElement;
+  if (!html.classList.contains('loading')) return;
+  var start = Date.now(), done = false;
+  function finish() {
+    if (done) return; done = true;
+    html.classList.add('loaded');
+    try { sessionStorage.setItem('kj-loaded', '1'); } catch (e) {}
+    setTimeout(function () { html.classList.remove('loading', 'loaded'); }, 1000);
+  }
+  window.addEventListener('load', function () { setTimeout(finish, Math.max(0, 1400 - (Date.now() - start))); });
+  setTimeout(finish, 6000);
+})();
+</script>
 
 <!-- 動き:画面に入ったら、ふわっと表示する(reveal の印をつけた部分) -->
 <script>

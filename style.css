@@ -288,6 +288,14 @@ img { max-width: 100%; display: block; }
   from { clip-path: inset(-30px -30px 100% -30px); }
   to   { clip-path: inset(-30px -30px -30px -30px); }
 }
+/* 名前:墨のにじみ(ぼやけた墨が紙にしみ込むように、一文字ずつくっきりしていく) */
+@keyframes ink {
+  0%   { opacity: 0; filter: blur(14px); transform: scale(1.08); }
+  60%  { opacity: .9; }
+  100% { opacity: 1; filter: blur(0); transform: none; }
+}
+@keyframes lineX { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes lineY { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes scrollLine {
   0%   { transform: translateY(-100%); }
@@ -297,7 +305,8 @@ img { max-width: 100%; display: block; }
 
 /* 開いた直後 */
 .hero-photo img { animation: heroZoom 2.4s var(--ease) both; }
-.hero-name { animation: nameWriteV 1.8s cubic-bezier(.65, 0, .35, 1) .9s both; }
+.hero-name span { display: inline-block; animation: ink 1.6s ease-out both; animation-delay: calc(.9s + var(--i) * .38s); }   /* --i = 何文字目か(index.html) */
+.hero-name::before { transform-origin: left center; animation: lineX .8s cubic-bezier(.65, 0, .35, 1) .5s both; }
 .hero-scroll {
   position: relative; z-index: 1;
   display: flex; flex-direction: column; align-items: center; gap: 8px;
@@ -305,6 +314,27 @@ img { max-width: 100%; display: block; }
 }
 .hero-scroll .line { position: relative; display: block; width: 1px; height: 44px; overflow: hidden; background: var(--line); }
 .hero-scroll .line::after { content: ""; position: absolute; inset: 0; background: var(--accent); animation: scrollLine 2s ease-in-out infinite; }
+
+/* ── 読み込み中の画面(トップだけ。1回の訪問で最初の1回) ──
+   葉っぱが1枚、風に揺れるように。読み込みが終わると、ふっと消えて、写真と名前の動きが始まる */
+.loader { display: none; }
+html.loading .loader {
+  display: flex; position: fixed; inset: 0; z-index: 100;
+  flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+  background: var(--bg); transition: opacity .9s ease, visibility .9s;
+}
+html.loaded .loader { opacity: 0; visibility: hidden; }
+html.loading:not(.loaded) .hero, html.loading:not(.loaded) .hero *, html.loading:not(.loaded) .hero-name::before { animation-play-state: paused; }   /* 読み込み中は、写真と名前の動きを待たせる */
+.loader-leaf { width: 44px; height: 44px; color: var(--accent); transform-origin: 50% 10%; animation: leafSway 2.4s ease-in-out infinite; }
+@keyframes leafSway {
+  0%, 100% { transform: translate(-10px, -4px) rotate(-24deg); }
+  50%      { transform: translate(10px, 4px) rotate(18deg); }
+}
+.loader-text { font-family: var(--font-head); font-size: 13px; letter-spacing: .3em; color: var(--accent); }
+.loader-dots i { font-style: normal; animation: dot 1.4s ease-in-out infinite; }
+.loader-dots i:nth-child(2) { animation-delay: .2s; }
+.loader-dots i:nth-child(3) { animation-delay: .4s; }
+@keyframes dot { 0%, 100% { opacity: .2; } 50% { opacity: 1; } }
 
 /* スクロールして見えたとき(.reveal が画面に入ると、.is-visible がつく)
    --d = 部分ごとの遅れ、--i = 一覧の何番目か */
@@ -363,7 +393,8 @@ img { max-width: 100%; display: block; }
 .form .submit { --i: 3; }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-photo img, .hero-name, .hero-scroll { animation: none; }
+  .hero-photo img, .hero-name span, .hero-name::before, .hero-scroll { animation: none; }
+  .loader-leaf, .loader-dots i { animation: none; }
   .hero-scroll .line::after { animation: none; transform: none; }
   .js .reveal .sec-title, .js .reveal .list li, .js .reveal .more, .js .reveal .live-card,
   .js .reveal .yt-stage, .js .reveal > .btn, .js .reveal .profile-text p,
@@ -383,9 +414,8 @@ img { max-width: 100%; display: block; }
     position: absolute; bottom: 8px; left: 0; margin: 0; padding-left: 22px;
     writing-mode: horizontal-tb; font-size: clamp(38px, 10vw, 60px); letter-spacing: .08em;
     color: #fff; filter: drop-shadow(0 2px 10px rgba(0, 0, 0, .5));
-    animation-name: nameWrite;
   }
-  .hero-name::before { right: auto; top: 8px; bottom: 8px; width: 4px; height: auto; }
+  .hero-name::before { right: auto; top: 8px; bottom: 8px; width: 4px; height: auto; transform-origin: center top; animation-name: lineY; }
   .hero-scroll { display: none; }   /* スマホでは、名前と重なるので「SCROLL」は隠す */
   .site-header .wrap { padding-top: 12px; padding-bottom: 12px; gap: 8px 24px; }   /* スマホでは、ヘッダーの上下の余白を詰める */
   .info { grid-template-columns: 1fr; gap: 40px; padding: 40px 0; }
