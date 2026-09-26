@@ -239,7 +239,7 @@ img { max-width: 100%; display: block; }
    写真の上下の位置(2人の顔が見える位置)は background-position の 2つ目の数字で調整 */
 #profile {
   position: relative; overflow: hidden; color: #fff;
-  background: linear-gradient(rgba(18, 28, 22, .5), rgba(18, 28, 22, .5)), url('images/about-duo-trees.jpg') center 47% / cover no-repeat;
+  background: linear-gradient(rgba(18, 28, 22, .5), rgba(18, 28, 22, .5)), url('images/about-duo-trees.jpg') center 52% / cover no-repeat;
 }
 #profile .sec-title { color: #fff; }
 .about-title span { font-family: var(--font-name); font-weight: 600; font-size: .82em; letter-spacing: .1em; margin-left: .2em; }
