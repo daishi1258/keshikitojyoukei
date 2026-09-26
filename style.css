@@ -1,0 +1,402 @@
+/* ==========================================================
+   A 2列型 ─ 配置(レイアウト)
+   色は theme.css で管理。ここは基本さわらなくてOK。
+   ========================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.8;
+}
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+/* ── ヘッダー:ロゴ左・メニュー右 ── */
+.site-header { border-top: 3px solid var(--accent); }
+.site-header .wrap {
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px 24px; padding-top: 18px; padding-bottom: 18px;
+}
+.logo {
+  display: flex; align-items: center; gap: 10px; line-height: 1.2;
+  font-family: var(--font-name); font-weight: 600; font-size: 21px; letter-spacing: .1em;
+  color: var(--text);
+}
+.logo::before { content: ""; flex: none; width: 7px; height: 7px; background: var(--accent); transform: rotate(45deg); }
+.nav ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 24px; }
+.nav a { font-family: var(--font-head); font-size: 16px; letter-spacing: .14em; color: var(--muted); transition: color .3s ease; }
+.nav a:hover { color: var(--accent); }
+
+/* ── メイン写真 ──
+   写真は切り抜かず、元の比率のまま見せる。
+   パソコン:左に縦書きの名前、右に縦長の写真。スマホ:写真を全幅で、名前は写真の左下。 */
+.hero {
+  position: relative;
+  max-width: 1100px; margin: 0 auto; padding: 0 24px;
+  display: grid; grid-template-columns: 1fr auto;
+  font-family: var(--font-head); letter-spacing: .2em; font-size: 13px;
+}
+.hero-photo { position: relative; overflow: hidden; }
+/* 写真:高さを画面に合わせ、幅は元の比率のまま自動(切り抜かない) */
+.hero-photo { --h: clamp(460px, calc(100vh - 110px), 860px); }   /* 写真の高さ(画面の高さに合わせる) */
+.hero-photo img {
+  display: block; max-width: none;
+  height: var(--h);
+  width: calc(var(--h) * 1522 / 1948);   /* 幅 = 高さ × 元の比率(横1522 / 縦1948)。写真を替えたら数字も替える */
+  filter: contrast(1.03);   /* 写真は、元の色のまま(ほんの少しだけ、くっきり) */
+}
+/* 左の欄:名前(上)と SCROLL(下) */
+.hero-text {
+  display: flex; flex-direction: column; justify-content: space-between; align-items: flex-end;
+  padding: 40px clamp(28px, 5vw, 64px) 24px 0;
+  color: var(--muted);
+}
+/* アーティスト名:縦書き。上に短いアクセントの線 */
+.hero-name {
+  position: relative; margin: 0; line-height: 1;
+  writing-mode: vertical-rl;
+  font-family: var(--font-name); font-weight: 600;
+  font-size: clamp(44px, 6.4vw, 84px); letter-spacing: .28em;
+  color: var(--text);
+}
+.hero-name::before {
+  content: ""; position: absolute; top: -28px; left: 0; right: 0; height: 3px;
+  background: var(--accent);
+}
+.hero-name { margin-top: 28px; }
+
+/* ── NEWS と LIVE を左右に並べる(幅は少し非対称に。境目に縦線) ── */
+.info { display: grid; grid-template-columns: .92fr 1.08fr; gap: 56px; padding: 64px 0; }
+.info .reveal { position: relative; z-index: 0; }
+.info #live::before {
+  content: ""; position: absolute; left: -28px; top: 4px; bottom: 4px; width: 1px;
+  background: var(--line);
+}
+.sec-title {
+  position: relative; margin: 0 0 24px; font-family: var(--font-head); font-weight: 400;
+  font-size: 32px; letter-spacing: .06em; color: var(--accent);
+}
+/* 見出しの後ろの、大きな薄い数字(飾り) */
+.sec-num {
+  position: absolute; z-index: -1; left: -4px; top: -30px;
+  font-family: var(--font-name); font-weight: 700; font-size: 88px; line-height: 1;
+  color: var(--accent); opacity: .14; letter-spacing: 0;
+}
+.list { list-style: none; margin: 0 0 28px; padding: 0; }
+.list li { padding: 14px 0; border-bottom: 1px dotted var(--line); font-size: 14px; }
+.list .date {
+  display: block; font-size: 12px; color: var(--muted);
+  border-left: 3px solid var(--accent); padding-left: 8px; margin-bottom: 4px;
+}
+.tag {
+  display: inline-block; margin-left: 6px; padding: 0 10px; border-radius: 0 8px 0 8px;
+  background: var(--accent); color: #fff; font-size: 11px; letter-spacing: .06em;
+}
+.more { text-align: center; }
+
+/* ── LIVE カード(共通部品) ── */
+.live-card {
+  border: 1px solid var(--line); border-radius: 0 28px 0 28px; padding: 24px 20px; margin-bottom: 24px;
+  text-align: center; background: var(--accent-soft);
+}
+.live-badge {
+  display: inline-block; border: 1px solid var(--accent); border-radius: 0 8px 0 8px; color: var(--accent);
+  padding: 0 14px; font-family: var(--font-head); letter-spacing: .14em; font-size: 13px;
+}
+.live-date { margin: 10px 0 0; font-size: 20px; font-weight: 500; }
+.live-status { margin: 0; color: var(--accent); font-size: 14px; font-weight: 500; }
+.live-place { margin: 8px 0 0; font-size: 17px; font-weight: 500; }
+.live-detail { margin: 6px 0 0; font-size: 13px; color: var(--muted); white-space: pre-line; }
+
+/* ── ライブ情報のページ(live.html)──
+   年月ごとの見出し、その下に1件ずつ。終わったライブは「PAST LIVE」の下に、薄く */
+.live-page { max-width: 800px; margin: 0 auto; padding: 64px 24px 80px; }
+.live-page .sec-title { text-align: center; margin-bottom: 48px; }
+.live-page .loading, .live-empty { text-align: center; color: var(--muted); }
+.month-group { margin-bottom: 44px; }
+.month-title {
+  margin: 0 0 8px; padding-bottom: 6px; border-bottom: 2px solid var(--accent);
+  font-family: var(--font-head); font-weight: 500; font-size: 26px; letter-spacing: .06em; color: var(--text);
+}
+.live-list { list-style: none; margin: 0; padding: 0; }
+.live-list li { padding: 20px 0; border-bottom: 1px dotted var(--line); }
+.live-list span { display: block; }
+.live-list .date { font-size: 18px; font-weight: 500; letter-spacing: .04em; border-left: 3px solid var(--accent); padding-left: 10px; }
+.live-list .status { margin-top: 4px; color: var(--accent); font-size: 13px; font-weight: 500; }
+.live-list .venue { margin-top: 6px; font-size: 16px; font-weight: 500; }
+.live-list .desc { margin-top: 4px; font-size: 14px; color: var(--muted); line-height: 1.8; white-space: pre-wrap; }
+.past-divider {
+  margin: 64px 0 28px; padding-top: 32px; border-top: 1px solid var(--line); text-align: center;
+  font-family: var(--font-head); font-weight: 400; font-size: 20px; letter-spacing: .3em; color: var(--muted);
+}
+.live-list.past { opacity: .5; }
+.live-page .back, .profile-page .back { margin-top: 48px; text-align: center; }
+
+/* ── プロフィールのページ(profile.html)──
+   上:2人の横長の写真、その下に紹介文。下:メンバー2人を並べる */
+.profile-page { max-width: 1000px; margin: 0 auto; padding: 64px 24px 80px; }
+.profile-page > .sec-title, .members .sec-title { text-align: center; margin-bottom: 48px; }
+.profile-photo img { width: 100%; height: auto; border-radius: 0 28px 0 28px; }
+.profile-body { max-width: 760px; margin: 40px auto 0; }
+.profile-name {
+  margin: 0 0 20px; padding-bottom: 12px; border-bottom: 2px solid var(--accent);
+  font-family: var(--font-name); font-weight: 600; font-size: 28px; letter-spacing: .12em;
+}
+.profile-body p { margin: 0 0 1em; }
+.members { margin-top: 96px; padding-top: 64px; border-top: 1px solid var(--line); }
+.member-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+.member-photo { aspect-ratio: 4 / 5; overflow: hidden; border-radius: 0 28px 0 28px; }
+.member-photo img { width: 100%; height: 100%; object-fit: cover; }
+.pos-nakayama { object-position: 22% 50%; }   /* 顔が左寄りの写真 */
+.pos-iisaka { object-position: 50% 30%; }
+.member-name {
+  margin: 20px 0 10px; padding-left: 12px; border-left: 3px solid var(--accent); line-height: 1.3;
+  font-family: var(--font-name); font-weight: 600; font-size: 22px; letter-spacing: .08em;
+}
+.member-text p { margin: 0 0 1em; font-size: 14px; line-height: 1.9; }
+.member-text p:last-child { margin-bottom: 0; }
+#profile .more { margin-top: 28px; }
+
+/* ── NEWS のページ(news.html)。トップの NEWS と同じ形の一覧を、少し大きく ── */
+.news-list li { padding: 18px 0; font-size: 15px; }
+.news-list .date { font-size: 13px; }
+
+/* ── ボタン:触れると、色が左から右へ広がる ── */
+.btn {
+  display: inline-block; border: 1px solid var(--accent); color: var(--accent);
+  border-radius: 0 18px 0 18px; padding: 6px 36px; font-family: var(--font-head);
+  font-size: 15px; letter-spacing: .1em; cursor: pointer;
+  background-color: transparent;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat; background-position: left center; background-size: 0% 100%;
+  transition: background-size .45s var(--ease, ease), color .35s ease, opacity .3s ease;
+}
+.btn:hover { background-size: 100% 100%; color: #fff; }
+.btn-fill { background-color: var(--accent); background-size: 100% 100%; color: #fff; padding: 10px 56px; font-size: 16px; }
+.btn-fill:hover { opacity: .85; }
+
+/* ── 下のセクション(中央寄せ・上に細い線) ── */
+.section { border-top: 2px solid var(--accent); padding: 72px 0; text-align: center; }
+.section .sec-title { margin-bottom: 32px; }
+.narrow { max-width: 640px; margin: 0 auto; }
+
+/* ── MOVIE:動画スライダー(真ん中の動画を大きく、左右にとなりの動画が少し見える) ──
+   --wn = 真ん中の動画の幅(全体に対する割合)、--gap = 動画と動画の間 */
+.yt { max-width: 1000px; margin: 0 auto; --wn: .655; --gap: 35px; }
+.yt-stage { position: relative; overflow: hidden; }
+.yt-slide { position: relative; aspect-ratio: 16 / 9; background: #000; margin-bottom: 16px; border-radius: 0 16px 0 16px; overflow: hidden; }   /* スクリプトが動かない環境では、縦に並べる */
+.yt-slide iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.yt-btn { display: none; }
+
+.js .yt-stage { height: 0; padding-top: calc(var(--wn) * 56.25%); }
+.js .yt-slide {
+  position: absolute; top: 0; left: 50%; margin: 0 0 0 calc(var(--wn) * -50%);
+  width: calc(var(--wn) * 100%);
+  transform: translateX(calc(var(--rel, 0) * (100% + var(--gap))));
+  opacity: .55; transition: transform .9s var(--ease, ease), opacity .8s ease-out;
+}
+.js .yt-slide.is-active { opacity: 1; }
+.js .yt-slide.no-anim { transition: none; }
+.js .yt-slide:not(.is-active) { cursor: pointer; }
+.js .yt-slide:not(.is-active) iframe { pointer-events: none; }   /* となりの動画は、クリックで切り替える(再生はしない) */
+
+.js .yt-btn {
+  display: block; position: absolute; z-index: 2; top: 50%; width: 40px; height: 40px; margin-top: -20px;
+  padding: 0; border: 0; border-radius: 0 10px 0 10px; background: var(--accent); opacity: .85; cursor: pointer; transition: opacity .3s ease;
+}
+.yt-btn:hover { opacity: 1; }
+.yt-btn::before {
+  content: ""; position: absolute; top: 50%; left: 50%; width: 10px; height: 10px;
+  border-top: 1.5px solid #fff; border-right: 1.5px solid #fff;
+}
+.yt-prev { left: 0; }
+.yt-prev::before { transform: translate(-30%, -50%) rotate(-135deg); }
+.yt-next { right: 0; }
+.yt-next::before { transform: translate(-70%, -50%) rotate(45deg); }
+
+.yt-caption {
+  margin: 18px 0 0; min-height: 1.8em; font-family: var(--font-head); font-size: 15px;
+  letter-spacing: .06em; transition: opacity .3s ease;
+}
+.btn-yt { display: inline-flex; align-items: center; gap: 8px; margin-top: 32px; font-size: 14px; }
+.btn-yt svg { width: 22px; height: 16px; flex: none; }
+.btn-yt .tri { transition: fill .35s ease; }
+.btn-yt:hover .tri { fill: var(--accent); }
+
+/* ── PROFILE ── */
+/* about "景色と情景":並木道の2人の写真を背景に。文字が読めるよう、少し暗くする。
+   写真の上下の位置(2人の顔が見える位置)は background-position の 2つ目の数字で調整 */
+#profile {
+  position: relative; overflow: hidden; color: #fff;
+  background: linear-gradient(rgba(18, 28, 22, .5), rgba(18, 28, 22, .5)), url('images/about-duo-trees.jpg') center 47% / cover no-repeat;
+}
+#profile .sec-title { color: #fff; }
+.about-title span { font-family: var(--font-name); font-weight: 600; font-size: .82em; letter-spacing: .1em; margin-left: .2em; }
+#profile .btn { border-color: #fff; color: #fff; background-image: linear-gradient(#fff, #fff); }
+#profile .btn:hover { color: var(--accent); }
+.profile-text { position: relative; z-index: 0; text-align: left; }
+
+
+/* ── 問い合わせフォーム ── */
+.form { text-align: left; }
+.form label { display: block; margin: 0 0 16px; font-size: 13px; color: var(--muted); }
+.form input, .form textarea {
+  width: 100%; margin-top: 4px; padding: 12px 14px;
+  border: 1px solid var(--line); border-radius: 0 10px 0 10px; font: inherit; color: var(--text); background: #fff;
+}
+.form input:focus, .form textarea:focus { outline: 2px solid var(--accent); }
+.form .submit { text-align: center; margin-top: 8px; }
+
+/* ── フッター ── */
+.site-footer { border-top: 2px solid var(--accent); padding: 40px 0; text-align: center; font-size: 12px; color: var(--muted); }
+.sns { display: flex; justify-content: center; gap: 24px; margin-bottom: 20px; font-family: var(--font-head); font-size: 15px; letter-spacing: .12em; }
+.sns a { color: var(--accent); display: block; width: 26px; height: 26px; transition: opacity .3s ease; }
+.sns a:hover { opacity: .6; }
+.sns svg { display: block; width: 100%; height: 100%; }
+
+/* ── 動き ──────────────────────────────────────────────
+   動きは、場所ごとに種類と速さを変えている(全部同じにしない)。
+     開いた直後      写真がゆっくり引いていく。名前は、書くように左から現れる
+     「SCROLL」      線が繰り返し流れる
+     見出し          左から右へ、幕が開くように現れる
+     NEWS・LIVE 一覧  1行ずつ、左から順に現れる
+     LIVE のカード    下から上へ、幕が上がるように現れる
+     動画            中央から左右へ開く
+     プロフィール・フォーム  上から順に、静かに現れる
+     ボタン          触れると、色が左から右へ広がる
+   「視差効果を減らす」設定の人には、動きなしで全部表示される。
+   ────────────────────────────────────────────────── */
+:root { --ease: cubic-bezier(.16, 1, .3, 1); }   /* 最初が速く、終わりがゆっくりの動き */
+
+@keyframes heroZoom { from { opacity: 0; transform: scale(1.1); } to { opacity: 1; transform: scale(1); } }
+@keyframes nameWrite {
+  from { clip-path: inset(-30px 100% -30px -30px); }
+  to   { clip-path: inset(-30px -30px -30px -30px); }
+}
+@keyframes nameWriteV {
+  from { clip-path: inset(-30px -30px 100% -30px); }
+  to   { clip-path: inset(-30px -30px -30px -30px); }
+}
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scrollLine {
+  0%   { transform: translateY(-100%); }
+  60%  { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+/* 開いた直後 */
+.hero-photo img { animation: heroZoom 2.4s var(--ease) both; }
+.hero-name { animation: nameWriteV 1.8s cubic-bezier(.65, 0, .35, 1) .9s both; }
+.hero-scroll {
+  position: relative; z-index: 1;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  animation: fadeIn 1s ease-out 2.4s both;
+}
+.hero-scroll .line { position: relative; display: block; width: 1px; height: 44px; overflow: hidden; background: var(--line); }
+.hero-scroll .line::after { content: ""; position: absolute; inset: 0; background: var(--accent); animation: scrollLine 2s ease-in-out infinite; }
+
+/* スクロールして見えたとき(.reveal が画面に入ると、.is-visible がつく)
+   --d = 部分ごとの遅れ、--i = 一覧の何番目か */
+.js .reveal .sec-title {
+  clip-path: inset(-6px 100% -6px -6px);
+  transition: clip-path 1.1s var(--ease) var(--d, 0s);
+}
+.js .reveal.is-visible .sec-title { clip-path: inset(-6px -6px -6px -6px); }
+
+.js .reveal .list li,
+.js .reveal .more {
+  opacity: 0; transform: translateX(-20px);
+  transition: opacity 1s var(--ease) calc(var(--d, 0s) + .35s + var(--i, 0) * .14s),
+              transform 1.1s var(--ease) calc(var(--d, 0s) + .35s + var(--i, 0) * .14s);
+}
+.js .reveal.is-visible .list li,
+.js .reveal.is-visible .more { opacity: 1; transform: none; }
+.list li:nth-child(1) { --i: 0; }
+.list li:nth-child(2) { --i: 1; }
+.list li:nth-child(3) { --i: 2; }
+.more { --i: 3; }
+#live .list li:nth-child(1) { --i: 2; }   /* LIVE は、カードのあとに続けて出す */
+#live .list li:nth-child(2) { --i: 3; }
+#live .more { --i: 4; }
+
+.js .reveal .live-card {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.2s var(--ease) calc(var(--d, 0s) + .35s);
+}
+.js .reveal.is-visible .live-card { clip-path: inset(0 0 0 0); }
+
+.js .reveal .yt-stage {
+  clip-path: inset(0 50% 0 50%);
+  transition: clip-path 1.4s var(--ease) .25s;
+}
+.js .reveal.is-visible .yt-stage { clip-path: inset(0 0 0 0); }
+.js .reveal > .btn {
+  opacity: 0;
+  transition: opacity 1s ease-out .9s, background-size .45s var(--ease), color .35s ease;
+}
+.js .reveal.is-visible > .btn { opacity: 1; }
+
+.js .reveal .profile-text p,
+.js .reveal .form label,
+.js .reveal .form .submit {
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 1.4s ease-out calc(.25s + var(--i, 0) * .22s),
+              transform 1.4s var(--ease) calc(.25s + var(--i, 0) * .22s);
+}
+.js .reveal.is-visible .profile-text p,
+.js .reveal.is-visible .form label,
+.js .reveal.is-visible .form .submit { opacity: 1; transform: none; }
+.profile-text p:nth-child(1), .form label:nth-child(1) { --i: 0; }
+.profile-text p:nth-child(2), .form label:nth-child(2) { --i: 1; }
+.form label:nth-child(3) { --i: 2; }
+.form .submit { --i: 3; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-photo img, .hero-name, .hero-scroll { animation: none; }
+  .hero-scroll .line::after { animation: none; transform: none; }
+  .js .reveal .sec-title, .js .reveal .list li, .js .reveal .more, .js .reveal .live-card,
+  .js .reveal .yt-stage, .js .reveal > .btn, .js .reveal .profile-text p,
+  .js .reveal .form label, .js .reveal .form .submit {
+    opacity: 1; transform: none; clip-path: none; transition: none;
+  }
+}
+
+/* ── スマホ ── */
+@media (max-width: 720px) {
+  /* メイン写真:全幅で、元の比率のまま。名前は写真の左下に白で重ねる */
+  .hero { display: block; padding: 0; }
+  .hero-photo img { width: 100%; height: auto; }   /* スマホは全幅。高さは元の比率で自動 */
+  .hero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.5), rgba(0,0,0,0) 40%); }   /* 名前を読みやすくする影 */
+  .hero-text { position: absolute; inset: 0; z-index: 1; padding: 0; pointer-events: none; }
+  .hero-name {
+    position: absolute; bottom: 8px; left: 0; margin: 0; padding-left: 22px;
+    writing-mode: horizontal-tb; font-size: clamp(38px, 10vw, 60px); letter-spacing: .08em;
+    color: #fff; filter: drop-shadow(0 2px 10px rgba(0, 0, 0, .5));
+    animation-name: nameWrite;
+  }
+  .hero-name::before { right: auto; top: 8px; bottom: 8px; width: 4px; height: auto; }
+  .hero-scroll { display: none; }   /* スマホでは、名前と重なるので「SCROLL」は隠す */
+  .site-header .wrap { padding-top: 12px; padding-bottom: 12px; gap: 8px 24px; }   /* スマホでは、ヘッダーの上下の余白を詰める */
+  .info { grid-template-columns: 1fr; gap: 40px; padding: 40px 0; }
+  .info #live::before { display: none; }   /* 1列になるので、縦線は消す */
+  .sec-num { font-size: 64px; top: -22px; }
+  .section { padding: 48px 0; }
+  .nav ul { gap: 4px 18px; }
+  .live-page { padding: 40px 20px 56px; }
+  .profile-page { padding: 40px 20px 56px; }
+  .profile-page .profile-photo { margin: 0 -20px; }   /* スマホでは、写真を画面の端まで */
+  .profile-photo img { border-radius: 0; }
+  .profile-body { margin-top: 28px; }
+  .members { margin-top: 56px; padding-top: 40px; }
+  .member-grid { grid-template-columns: 1fr; gap: 44px; }
+  .month-title { font-size: 22px; }
+  .yt { --wn: 1; --gap: 12px; margin: 0 -24px; }   /* スマホでは、動画を画面いっぱいに。となりの動画は見えない */
+  .js .yt-btn { width: 22px; }
+  .yt-btn::before { width: 8px; height: 8px; }
+  .btn-yt { font-size: 12px; padding: 9px 16px; gap: 6px; }
+}

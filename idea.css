@@ -1,0 +1,30 @@
+/* 余白アイデアの見本 */
+.hero-text { position: relative; }
+.idea { position: absolute; z-index: 1; }
+.idea-words { top: 150px; right: calc((clamp(28px, 5vw, 64px) + clamp(44px, 6.4vw, 84px)) + 40px); writing-mode: vertical-rl;
+  font-family: var(--font-name); font-weight: 600; font-size: 15px; line-height: 2.4; letter-spacing: .32em; color: var(--muted); }
+.idea-live { left: 0; bottom: 28px; display: flex; flex-direction: column; gap: 2px; padding-left: 16px; border-left: 2px solid var(--accent); color: var(--text); }
+.idea-live .k { font-family: var(--font-head); font-size: 13px; letter-spacing: .24em; color: var(--accent); }
+.idea-live .d { font-family: var(--font-head); font-size: 34px; letter-spacing: .06em; line-height: 1.2; }
+.idea-live .d small { font-size: 15px; color: var(--muted); letter-spacing: .14em; }
+.idea-live .p { font-size: 15px; font-weight: 500; letter-spacing: .08em; }
+.idea-live .t { font-size: 12px; color: var(--muted); }
+.idea-live .m { margin-top: 10px; font-family: var(--font-head); font-size: 13px; letter-spacing: .18em; color: var(--accent); }
+
+/* スマホ:写真の下に、左に縦書きの言葉、右に次のライブを並べる。名前は写真の左下のまま */
+@media (max-width: 720px) {
+  .hero { display: flex; flex-direction: column; }
+  .hero-photo { order: 1; }
+  .hero-text { order: 2; }
+  .hero-text {
+    position: static; display: flex; flex-direction: row; justify-content: space-between; align-items: flex-end; gap: 20px;
+    padding: 28px 24px 8px; pointer-events: auto;
+  }
+  .hero-name {
+    top: calc(100vw * 1948 / 1522 - 8px); bottom: auto; transform: translateY(-100%);
+  }
+  .idea { position: static; }
+  .idea-words { order: 1; font-size: 13px; line-height: 2.2; }
+  .idea-live { order: 2; align-self: flex-end; }
+  .idea-live .d { font-size: 28px; }
+}

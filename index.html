@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- 途中経過の公開中は、検索に出さない。完成して本番で公開するときに、この1行を消す -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>景色と情景 | Official Site</title>
+  <meta name="description" content="景色と情景 のオフィシャルサイト。ライブ情報・動画・プロフィール・お問い合わせ。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- 動きを使う印(スクリプトが動かない環境では、動きなしで全部表示される) -->
+  <script>document.documentElement.classList.add('js');</script>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500&family=Noto+Sans+JP:wght@400;500&family=Shippori+Mincho:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="theme.css?v=9">
+  <link rel="stylesheet" href="style.css?v=20">
+  <link rel="stylesheet" href="idea.css?v=6">
+</head>
+<body>
+
+<!-- ▼ ヘッダー -->
+<header class="site-header">
+  <div class="wrap">
+    <!-- ロゴ:専用の手書きロゴがないので、筆文字風フォントで表示 -->
+    <a class="logo" href="#top">景色と情景</a>
+    <nav class="nav" aria-label="メニュー">
+      <ul>
+        <li><a href="news.html">NEWS</a></li>
+        <li><a href="live.html">LIVE</a></li>
+        <li><a href="#movie">MOVIE</a></li>
+        <li><a href="profile.html">PROFILE</a></li>
+        <li><a href="#contact">CONTACT</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<!-- ▼ メイン写真(写真を替えるときは、下の img の src を書き換える。比率は写真に合わせて自動)
+     パソコン:左に縦書きの名前、右に写真(元の縦長の比率のまま)
+     スマホ　:写真を全幅で、名前は写真の左下 -->
+<div class="hero" id="top">
+  <div class="hero-text">
+    <!-- アーティスト名。専用の手書きロゴがないので、明朝体で表示 -->
+    <h1 class="hero-name">景色と情景</h1>
+    <div class="idea idea-words" aria-hidden="true">木漏れ日の中で<br>名前のない景色を<br>うたにしている</div><a class="idea idea-live" href="live.html"><span class="k">NEXT LIVE</span><span class="d">&nbsp;</span><span class="p"></span><span class="t"></span><span class="m">LIVE INFO →</span></a>
+    <span class="hero-scroll"><i class="line"></i>SCROLL</span>
+  </div>
+  <div class="hero-photo"><img src="images/forest-duo2.jpg" width="1522" height="1948" alt="森の中に立つ、景色と情景の2人"></div>
+</div>
+
+<main>
+  <!-- ▼ NEWS と LIVE を左右に並べる -->
+  <div class="wrap">
+    <div class="info" id="info">
+      <section class="reveal" style="--d:0s" aria-labelledby="news-title">
+        <span class="sec-num" aria-hidden="true">01</span>
+        <h2 class="sec-title" id="news-title">NEWS</h2>
+        <!-- お知らせ。中身は js/news.js が microCMS から読み込んで、新しい順に3件入れる
+             (読み込めないときは、下の文のまま) -->
+        <ul class="list">
+          <li><span class="date">2026.09.20</span>新しいサイトを公開しました</li>
+          <li><span class="date">2026.09.15</span>10月のライブ情報を更新しました</li>
+          <li><span class="date">2026.09.01</span>お知らせのタイトルがここに入ります</li>
+        </ul>
+        <p class="more"><a class="btn" href="news.html">VIEW ALL</a></p>
+      </section>
+
+      <section id="live" class="reveal" style="--d:.15s" aria-labelledby="live-title">
+        <span class="sec-num" aria-hidden="true">02</span>
+        <h2 class="sec-title" id="live-title">LIVE</h2>
+
+        <!-- 次のライブ。中身は js/live.js が microCMS から読み込んで入れる(写真の左の NEXT LIVE も同じ)。
+             今日以降でいちばん近いライブが、自動で入る。下の一覧は、その次の2件 -->
+        <div class="live-card">
+          <span class="live-badge">NEXT LIVE</span>
+          <p class="live-date">&nbsp;</p>
+          <p class="live-status" hidden></p>
+          <p class="live-place">ライブ情報を読み込み中...</p>
+          <p class="live-detail" hidden></p>
+        </div>
+
+        <ul class="list" hidden></ul>
+        <p class="more"><a class="btn" href="live.html">VIEW ALL</a></p>
+      </section>
+    </div>
+  </div>
+
+  <!-- ▼ MOVIE -->
+  <section class="section" id="movie">
+    <div class="wrap reveal">
+      <h2 class="sec-title">MOVIE</h2>
+      <!-- 動画スライダー:真ん中の動画が再生でき、左右の矢印(またはとなりの動画をクリック)で切り替わる。
+           動画を変えるときは、iframe の src の「ID」の部分(YouTube のURL末尾)と、data-title(下に出るタイトル)を書き換える -->
+      <div class="yt" id="yt" aria-roledescription="carousel" aria-label="動画">
+        <div class="yt-stage">
+          <!-- 動画1:iframe の src の「VIDEO_ID」の部分と、data-title(下に出るタイトル)を、実際の動画に書き換える -->
+          <div class="yt-slide" data-title="動画タイトル1">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID?enablejsapi=1&amp;rel=0" title="動画タイトル1" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <div class="yt-slide" data-title="動画タイトル2">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID?enablejsapi=1&amp;rel=0" title="動画タイトル2" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <div class="yt-slide" data-title="動画タイトル3">
+            <iframe src="https://www.youtube.com/embed/VIDEO_ID?enablejsapi=1&amp;rel=0" title="動画タイトル3" loading="lazy" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <button class="yt-btn yt-prev" type="button" aria-label="前の動画"></button>
+          <button class="yt-btn yt-next" type="button" aria-label="次の動画"></button>
+        </div>
+        <p class="yt-caption" aria-live="polite"></p>
+      </div>
+      <!-- チャンネルへのボタン(リンク先は、景色と情景さんのチャンネルURLに) -->
+      <a class="btn btn-yt" href="#" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 22 16" aria-hidden="true"><rect width="22" height="16" rx="4" fill="currentColor"/><path class="tri" d="M9 4.6v6.8L14.6 8z" fill="#fff"/></svg>
+        景色と情景 OFFICIAL YOUTUBE CHANNEL
+      </a>
+    </div>
+  </section>
+
+  <!-- ▼ about "景色と情景"(背景は、並木道の2人の写真。写真は style.css の #profile で指定) -->
+  <section class="section" id="profile">
+    <div class="wrap narrow reveal">
+      <h2 class="sec-title about-title">about <span>“景色と情景”</span></h2>
+      <div class="profile-text">
+        <p>ここにプロフィール文</p>
+      </div>
+      <p class="more"><a class="btn" href="profile.html">VIEW MORE</a></p>
+    </div>
+  </section>
+
+  <!-- ▼ CONTACT -->
+  <section class="section" id="contact">
+    <div class="wrap narrow reveal">
+      <h2 class="sec-title">CONTACT</h2>
+      <!-- action は、フォーム送信サービス(Formspree など)のURLに置き換える -->
+      <form class="form" action="#" method="post">
+        <label>お名前<input type="text" name="name" required></label>
+        <label>メールアドレス<input type="email" name="email" required></label>
+        <label>メッセージ<textarea name="message" rows="6" required></textarea></label>
+        <p class="submit"><button class="btn btn-fill" type="submit">SEND</button></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!-- ▼ フッター -->
+<footer class="site-footer">
+  <!-- SNS:アイコンを押すと、別のタブで開く。増やすときは、a を1つ足す -->
+  <div class="sns">
+    <a href="https://www.instagram.com/keshiki2324/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor"/></svg>
+    </a>
+    <a href="https://www.tiktok.com/@keshikijyoukei" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+    </a>
+  </div>
+  <small>&copy; 2026 景色と情景. All rights reserved.</small>
+</footer>
+
+<!-- ライブ情報(microCMS の設定は js/config.js) -->
+<script src="js/config.js?v=3"></script>
+<script src="js/format.js?v=1"></script>
+<script src="js/live.js?v=6"></script>
+<script src="js/news.js?v=2"></script>
+
+<!-- 動き:画面に入ったら、ふわっと表示する(reveal の印をつけた部分) -->
+<script>
+(function () {
+  var els = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(function (e) { e.classList.add('is-visible'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+  els.forEach(function (e) { io.observe(e); });
+})();
+</script>
+
+<!-- 動き:動画スライダー(矢印・となりの動画のクリック・スマホのスワイプで切り替え。最後の次は最初へ戻る) -->
+<script>
+(function () {
+  var root = document.getElementById('yt');
+  if (!root) return;
+  var slides = [].slice.call(root.querySelectorAll('.yt-slide'));
+  var cap = root.querySelector('.yt-caption');
+  var n = slides.length, cur = 0;
+
+  function rel(i) { var d = (i - cur + n) % n; return d > n / 2 ? d - n : d; }   // 真ん中=0、右=1、左=-1
+
+  function pause(slide) {   // 見えなくなった動画は、一時停止する
+    var f = slide.querySelector('iframe');
+    try { f.contentWindow.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*'); } catch (e) {}
+  }
+
+  function render(first) {
+    slides.forEach(function (s, i) {
+      var r = rel(i), old = s._rel;
+      s._rel = r;
+      var jump = old !== undefined && Math.abs(r - old) > 1;   // 端から端へ飛ぶ1枚は、動きなしで移す
+      if (jump) s.classList.add('no-anim');
+      s.style.setProperty('--rel', r);
+      if (jump) { void s.offsetWidth; s.classList.remove('no-anim'); }
+      var active = r === 0;
+      if (!active && s.classList.contains('is-active')) pause(s);
+      s.classList.toggle('is-active', active);
+      s.setAttribute('aria-hidden', active ? 'false' : 'true');
+    });
+    var text = slides[cur].getAttribute('data-title') || '';
+    if (first) { cap.textContent = text; return; }
+    cap.style.opacity = 0;
+    setTimeout(function () { cap.textContent = text; cap.style.opacity = 1; }, 250);
+  }
+
+  function go(i) { cur = (i + n) % n; render(false); }
+  root.querySelector('.yt-prev').addEventListener('click', function () { go(cur - 1); });
+  root.querySelector('.yt-next').addEventListener('click', function () { go(cur + 1); });
+  slides.forEach(function (s, i) { s.addEventListener('click', function () { if (i !== cur) go(i); }); });
+
+  var x0 = null, stage = root.querySelector('.yt-stage');
+  stage.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0; x0 = null;
+    if (Math.abs(dx) > 40) go(cur + (dx < 0 ? 1 : -1));
+  });
+
+  render(true);
+})();
+</script>
+
+</body>
+</html>
