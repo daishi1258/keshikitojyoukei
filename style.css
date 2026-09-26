@@ -335,9 +335,9 @@ img { max-width: 100%; display: block; }
 
 /* 開いた直後 */
 .hero-photo img { animation: heroZoom 2.4s var(--ease) both; }
-.hero-name span { display: inline-block; animation: ink 1.6s ease-out both; animation-delay: calc(.9s + var(--i) * .38s); }   /* --i = 何文字目か(index.html) */
+.hero-name span { display: inline-block; animation: ink 1.35s ease-out both; animation-delay: calc(.8s + var(--i) * .32s); }   /* --i = 何文字目か(index.html) */
 .hero-name::before { transform-origin: left center; animation: lineX .8s cubic-bezier(.65, 0, .35, 1) .5s both; }
-.idea-words { animation: fogClear 2.6s cubic-bezier(.3, .1, .3, 1) 3.6s both; }   /* 名前が出終わるころ(約3.6秒後)から */
+.idea-words { animation: fogClear 2.2s cubic-bezier(.3, .1, .3, 1) 3s both; }   /* 名前が出終わるころ(約3秒後)から */
 .hero-scroll {
   position: relative; z-index: 1;
   display: flex; flex-direction: column; align-items: center; gap: 8px;
